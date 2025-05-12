@@ -1,28 +1,64 @@
 function getComputerChoice () {
-    const computerChoice = Math.floor(Math.random() * 3);
-    return computerChoice;
+    return Math.floor(Math.random() * 3);
 };
 
-const playerChoice = prompt("Enter your choice: 0 rock 1 paper 2 scissors")
+let playerChoice = 99;
 
 function playRound(playerSelection, computerSelection) {
-    if (playerChoice === computerChoice){
+    if (playerSelection === computerSelection){
         return "tie";
-    } else if (playerChoice === 0 && computerChoice == 1) {
+    } else if (playerSelection === 0 && computerSelection == 1) {
         return "lose, paper kill rok"
-    } else if (playerChoice == 0 && computerChoice ==2) {
+    } else if (playerSelection == 0 && computerSelection ==2) {
         return "win, rock crush scissors"   
-    } else if (playerChoice == 1 && computerChoice == 0) {
+    } else if (playerSelection == 1 && computerSelection == 0) {
         return "win, paper kill rock"
     }
-    else if (playerChoice == 1 && computerChoice == 2) {
+    else if (playerSelection == 1 && computerSelection == 2) {
         return "lose, scissors cut paper"
-    } else if (playerChoice == 2 && computerChoice == 0) {
+    } else if (playerSelection == 2 && computerSelection == 0) {
         return "lose, rock crush scissors"
-    } else if (playerChoice == 2 && computerChoice == 1) {
+    } else if (playerSelection == 2 && computerSelection == 1) {
         return "win, scissors cut paper"
     }
 }
 
-let computerChoice = getComputerChoice();
-console.log(playRound(playerChoice, computerChoice));
+
+let buttons = document.querySelectorAll("button")
+
+let optionsDiv = document.querySelector(".option");
+
+let result = document.createElement("div");
+
+buttons.forEach((button) => {
+    button.addEventListener("click", () =>{
+        const playerSelection = button.textContent;
+        let computerChoice = getComputerChoice();
+
+        switch (playerSelection) {
+            case "rock":
+                playerChoice = 0;
+                console.log(playRound(playerChoice, computerChoice));
+                result.textContent = playRound(playerChoice, computerChoice);
+                optionsDiv.appendChild(result);
+                break;
+            case "paper":
+                playerChoice = 1;
+                console.log(playRound(playerChoice, computerChoice));
+                playRound(playerChoice, computerChoice)
+                                result.textContent = playRound(playerChoice, computerChoice);
+                optionsDiv.appendChild(result);
+                break;
+            case "scissors":
+                playerChoice = 2;
+                console.log(playRound(playerChoice, computerChoice));
+                playRound(playerChoice, computerChoice)
+                                result.textContent = playRound(playerChoice, computerChoice);
+                optionsDiv.appendChild(result);
+                break;
+            default:
+                console.log("Invalid choice");
+                break;
+        }
+    })
+})
